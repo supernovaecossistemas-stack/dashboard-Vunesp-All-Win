@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisão VUNESP — leitura de mídia paga · All Win Cursos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EDF1;
+  --surface:#FFFFFF;
+  --surface-2:#F4F6F9;
+  --ink:#0E2A47;
+  --ink-soft:#4B627C;
+  --ink-faint:#8298AE;
+  --rule:#D3DBE4;
+  --amber:#E09600;
+  --amber-soft:#FBEBC8;
+  --alert:#B3322B;
+  --alert-soft:#F7E0DE;
+  --good:#16776A;
+  --good-soft:#D9EBE7;
+  --bar:#2F5E8C;
+  --bar-2:#9FB8CE;
+  --shadow:0 1px 0 rgba(14,42,71,.06), 0 12px 28px -22px rgba(14,42,71,.5);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0B141D;
+    --surface:#121F2B;
+    --surface-2:#182836;
+    --ink:#E6EDF4;
+    --ink-soft:#A3B6C8;
+    --ink-faint:#6E8499;
+    --rule:#22394C;
+    --amber:#F0B341;
+    --amber-soft:#3A2D12;
+    --alert:#E8756B;
+    --alert-soft:#3B1F1D;
+    --good:#4CC0AC;
+    --good-soft:#12332E;
+    --bar:#4A85BE;
+    --bar-2:#2E4A63;
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 14px 30px -24px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0B141D;
+  --surface:#121F2B;
+  --surface-2:#182836;
+  --ink:#E6EDF4;
+  --ink-soft:#A3B6C8;
+  --ink-faint:#6E8499;
+  --rule:#22394C;
+  --amber:#F0B341;
+  --amber-soft:#3A2D12;
+  --alert:#E8756B;
+  --alert-soft:#3B1F1D;
+  --good:#4CC0AC;
+  --good-soft:#12332E;
+  --bar:#4A85BE;
+  --bar-2:#2E4A63;
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 14px 30px -24px #000;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;
+  line-height:1.5;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 88px}
+
+/* ---------- topo ---------- */
+.masthead{
+  border-bottom:1px solid var(--rule);
+  padding:28px 0 22px;
+  display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between;
+}
+.brandline{font-size:13px;letter-spacing:.02em;color:var(--ink-soft)}
+.brandline b{color:var(--ink);font-weight:600}
+.themetoggle{
+  font:inherit;font-size:12.5px;color:var(--ink-soft);background:none;
+  border:1px solid var(--rule);border-radius:999px;padding:5px 13px;cursor:pointer;
+}
+.themetoggle:hover{color:var(--ink);border-color:var(--ink-faint)}
+
+h1{
+  font-family:"Newsreader",Georgia,serif;
+  font-weight:500;
+  font-size:clamp(34px,5.4vw,58px);
+  line-height:1.04;
+  letter-spacing:-.015em;
+  margin:36px 0 14px;
+  max-width:16ch;
+}
+.standfirst{max-width:62ch;color:var(--ink-soft);font-size:16px;margin:0 0 34px}
+
+/* ---------- placar ---------- */
+.scoreboard{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.score{background:var(--surface);padding:18px 18px 16px}
+.score .k{font-size:12px;color:var(--ink-soft);margin:0 0 6px}
+.score .v{font-family:"Newsreader",Georgia,serif;font-size:32px;line-height:1;font-weight:500;letter-spacing:-.01em}
+.score .n{font-size:12.5px;color:var(--ink-faint);margin-top:7px}
+.score .v.warn{color:var(--alert)}
+
+/* ---------- seções ---------- */
+section{margin-top:56px}
+h2{
+  font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:27px;letter-spacing:-.01em;
+  margin:0 0 6px;
+}
+.deck{color:var(--ink-soft);margin:0 0 20px;max-width:70ch;font-size:14.5px}
+
+/* ---------- gráfico ---------- */
+.chartcard{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:20px 18px 12px;box-shadow:var(--shadow)}
+.switch{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.switch button{
+  font:inherit;font-size:13px;padding:6px 13px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--rule);background:var(--surface-2);color:var(--ink-soft);
+}
+.switch button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.switch button:focus-visible,.themetoggle:focus-visible,th button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.chartscroll{overflow-x:auto}
+svg{display:block;width:100%;min-width:640px;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:12.5px;color:var(--ink-soft);padding:10px 2px 6px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* ---------- tabelas ---------- */
+.tablescroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:10px;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
+th,td{padding:10px 13px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:220px}
+thead th{
+  position:sticky;top:0;background:var(--surface-2);color:var(--ink-soft);
+  font-weight:500;font-size:12px;border-bottom:1px solid var(--rule);z-index:1;
+}
+th button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+th button:hover{color:var(--ink)}
+th[aria-sort] button{color:var(--ink);font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.total td{background:var(--surface-2);font-weight:600;border-top:1px solid var(--rule)}
+td.good{color:var(--good);font-weight:600}
+td.bad{color:var(--alert);font-weight:600}
+.tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:1px;font-weight:500}
+.tag.leads{background:var(--alert-soft);color:var(--alert)}
+.tag.quente{background:var(--amber-soft);color:var(--amber)}
+.tag.refeita{background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--rule)}
+.dash{color:var(--ink-faint)}
+
+/* ---------- anúncios ---------- */
+.adgroup{background:var(--surface);border:1px solid var(--rule);border-radius:10px;margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+.adgroup>summary{
+  padding:14px 18px;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;
+  justify-content:space-between;list-style:none;
+}
+.adgroup>summary::-webkit-details-marker{display:none}
+.adgroup>summary::after{content:"+";color:var(--ink-faint);font-size:17px;line-height:1}
+.adgroup[open]>summary::after{content:"–"}
+.adgroup>summary:hover{background:var(--surface-2)}
+.adgroup .ttl{font-weight:600}
+.adgroup .meta{font-size:12.5px;color:var(--ink-soft)}
+.adgroup .body{border-top:1px solid var(--rule)}
+.adgroup table{min-width:700px}
+.adgroup .tablescroll{border:0;border-radius:0;box-shadow:none;background:transparent}
+
+/* ---------- achados ---------- */
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:14px}
+.finding{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--amber);border-radius:8px;padding:16px 18px;box-shadow:var(--shadow)}
+.finding.neg{border-left-color:var(--alert)}
+.finding.pos{border-left-color:var(--good)}
+.finding h3{font-size:15px;margin:0 0 7px;font-weight:600}
+.finding p{margin:0;font-size:13.8px;color:var(--ink-soft)}
+.finding .fig{font-family:"Newsreader",Georgia,serif;font-size:25px;display:block;margin-bottom:4px;color:var(--ink)}
+
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-faint);max-width:72ch}
+
+@media (max-width:760px){
+  .scoreboard{grid-template-columns:1fr}
+  .wrap{padding-bottom:56px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="masthead">
+  <div class="brandline"><b>All Win Cursos</b></div>
+</div>
+
+<h1>Análise da conta</h1>
+<p class="standfirst">Catorze campanhas em três períodos. As de 2026 concentram 92% de todo o investimento já feito no produto e contam uma história clara: a conversa custava R$&nbsp;3,90 no aquecimento e R$&nbsp;18,83 no fechamento.</p>
+
+<div class="scoreboard">
+  <div class="score"><p class="k">Investido em 2026</p><div class="v">R$&nbsp;2.443</div><p class="n">11 campanhas · 25/08 a 15/09</p></div>
+  <div class="score"><p class="k">Conversas no WhatsApp</p><div class="v">228</div><p class="n">R$ 10,71 por conversa</p></div>
+  <div class="score"><p class="k">Alcance somado</p><div class="v">86.694</div><p class="n">186.494 impressões · CTR 0,92%</p></div>
+</div>
+
+<section>
+  <h2>A curva do lançamento</h2>
+  <p class="deck">Cada barra é uma campanha de 2026, em ordem de estreia. A linha é o custo por conversa iniciada. As duas campanhas configuradas como Leads não têm ponto na linha porque não registraram resultado algum.</p>
+  <div class="chartcard">
+    <div class="switch" id="metricSwitch">
+      <button type="button" data-metric="spend" aria-pressed="true">Investido</button>
+      <button type="button" data-metric="results" aria-pressed="false">Conversas</button>
+      <button type="button" data-metric="reach" aria-pressed="false">Alcance</button>
+      <button type="button" data-metric="clicks" aria-pressed="false">Cliques</button>
+    </div>
+    <div class="chartscroll"><svg id="chart" viewBox="0 0 940 360" role="img" aria-label="Gráfico combinado: barras da métrica selecionada por campanha e linha do custo por conversa"></svg></div>
+    <div class="legend">
+      <span><i style="background:var(--bar)"></i><span id="legendBar">Investido (R$)</span></span>
+      <span><i style="background:var(--amber);border-radius:999px"></i>Custo por conversa (R$)</span>
+      <span><i style="background:var(--alert-soft);border:1px solid var(--alert)"></i>Campanha sem resultado</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Campanhas · 2026</h2>
+  <p class="deck">Clique no cabeçalho para reordenar. Todas estão pausadas hoje. “Refeita” marca as duas campanhas recriadas em 03/09 depois que a versão de Leads não entregou.</p>
+  <div class="tablescroll">
+    <table id="tCamp">
+      <thead><tr>
+        <th><button type="button" data-k="name">Campanha</button></th>
+        <th><button type="button" data-k="period">Período</button></th>
+        <th><button type="button" data-k="spend">Investido</button></th>
+        <th><button type="button" data-k="reach">Alcance</button></th>
+        <th><button type="button" data-k="impr">Impressões</button></th>
+        <th><button type="button" data-k="ctr">CTR</button></th>
+        <th><button type="button" data-k="clicks">Cliques</button></th>
+        <th><button type="button" data-k="results">Result.</button></th>
+        <th><button type="button" data-k="cpr">Custo/result.</button></th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Conjuntos de anúncios</h2>
+  <p class="deck">Cada campanha rodou com um único conjunto — nunca houve teste de público dentro da mesma campanha. Por isso os números do conjunto repetem os da campanha; o que muda aqui é a otimização e o orçamento.</p>
+  <div class="tablescroll">
+    <table id="tAdset">
+      <thead><tr>
+        <th>Conjunto</th><th>Campanha</th><th>Otimização</th><th>Orçamento/dia</th>
+        <th>Investido</th><th>Alcance</th><th>CTR</th><th>Result.</th><th>Custo/result.</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Anúncios</h2>
+  <p class="deck">Abra cada campanha para ver o desempenho criativo. Onde houve mais de um anúncio no mesmo conjunto, a diferença entre o melhor e o pior chegou a quatro vezes.</p>
+  <div id="ads"></div>
+</section>
+
+<section>
+  <h2>Campanhas anteriores</h2>
+  <p class="deck">Três campanhas antigas, R$ 198,23 somados. Servem de referência histórica, não de comparação direta: a de 2025 era de reconhecimento e as de 2024 eram impulsionamentos de post a R$ 6 por dia.</p>
+  <div class="tablescroll">
+    <table id="tOld">
+      <thead><tr>
+        <th>Campanha</th><th>Período</th><th>Objetivo</th><th>Investido</th>
+        <th>Alcance</th><th>Impressões</th><th>CTR</th><th>Result.</th><th>Custo/result.</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+</div>
+
+<script>
+const camp = [
+ {name:"P. Frio · Vunesp · 25/08", period:"25/08 →", spend:187.23, reach:8237, impr:18626, ctr:1.07, clicks:200, results:48, cpr:3.90, goal:"Conversas", budget:"R$ 20,00", adset:"Regiões", tag:""},
+ {name:"P. Frio · Vunesp · 26/08", period:"26/08 →", spend:152.07, reach:7359, impr:16592, ctr:1.00, clicks:166, results:29, cpr:5.24, goal:"Conversas", budget:"R$ 15,00", adset:"Regiões", tag:""},
+ {name:"P. Quente · Vunesp · 31/08", period:"31/08", spend:99.96, reach:6656, impr:8534, ctr:0.49, clicks:42, results:9, cpr:11.11, goal:"Conversas", budget:"CBO", adset:"Vunesp", tag:"quente"},
+ {name:"Vunesp · Lançamento · 01/09", period:"01/09–07/09", spend:121.49, reach:5134, impr:8201, ctr:1.19, clicks:98, results:0, cpr:null, goal:"Leads", budget:"CBO", adset:"Regiões", tag:"leads"},
+ {name:"Vunesp · João · 02/09", period:"02/09–07/09", spend:43.39, reach:1422, impr:2104, ctr:1.24, clicks:26, results:0, cpr:null, goal:"Leads", budget:"CBO", adset:"Regiões", tag:"leads"},
+ {name:"Vunesp · João · 02/09", period:"03/09–07/09", spend:257.59, reach:8513, impr:15077, ctr:1.03, clicks:155, results:25, cpr:10.30, goal:"Conversas", budget:"CBO", adset:"Regiões", tag:"refeita"},
+ {name:"Vunesp · Lançamento · 01/09", period:"03/09–07/09", spend:474.02, reach:18521, impr:40366, ctr:0.82, clicks:330, results:56, cpr:8.46, goal:"Conversas", budget:"CBO", adset:"Regiões", tag:"refeita"},
+ {name:"Vunesp · 1º Lote · 04/09", period:"04/09–07/09", spend:293.31, reach:9633, impr:27690, ctr:0.61, clicks:169, results:7, cpr:41.90, goal:"Conversas", budget:"CBO", adset:"Regiões", tag:""},
+ {name:"P. Frio · Vunesp · 08/09", period:"08/09", spend:22.21, reach:1054, impr:1678, ctr:0.54, clicks:9, results:0, cpr:null, goal:"Conversas", budget:"R$ 20,00", adset:"Regiões", tag:""},
+ {name:"Vunesp · 2º Lote · 09/09", period:"09/09–15/09", spend:396.44, reach:11329, impr:28763, ctr:1.15, clicks:332, results:33, cpr:12.01, goal:"Conversas", budget:"CBO", adset:"Regiões", tag:""},
+ {name:"Revisão Vunesp · 2º Lote · 11/09", period:"11/09–15/09", spend:395.35, reach:8836, impr:18863, ctr:1.04, clicks:197, results:21, cpr:18.83, goal:"Conversas", budget:"CBO", adset:"Regiões", tag:""}
+];
+
+const ads = [
+ {c:"P. Frio · Vunesp · 25/08", items:[
+   {n:"🚨 VEM AÍ: REVISÃO VUNESP! 💙💛", spend:155.57, reach:7878, impr:16043, ctr:1.12, clicks:180, results:47, cpr:3.31},
+   {n:"🚨 ATENÇÃO, VESTIBULANDO!", spend:17.39, reach:1054, impr:1519, ctr:0.79, clicks:12, results:0, cpr:null},
+   {n:"⏰ ÚLTIMO DIA chegando!", spend:14.27, reach:757, impr:1064, ctr:0.75, clicks:8, results:1, cpr:14.27}
+ ]},
+ {c:"P. Frio · Vunesp · 26/08", items:[
+   {n:"🚨 ATENÇÃO, VESTIBULANDO!", spend:73.52, reach:4704, impr:8686, ctr:1.06, clicks:92, results:15, cpr:4.90},
+   {n:"🚨 VEM AÍ: REVISÃO VUNESP! 💙💛", spend:70.39, reach:4451, impr:7254, ctr:0.95, clicks:69, results:12, cpr:5.87},
+   {n:"⏰ ÚLTIMO DIA chegando!", spend:8.16, reach:490, impr:652, ctr:0.77, clicks:5, results:2, cpr:4.08}
+ ]},
+ {c:"P. Quente · Vunesp · 31/08", items:[
+   {n:"✅ Revisão VUNESP é no All Win Cursos!", spend:99.96, reach:6656, impr:8534, ctr:0.49, clicks:42, results:9, cpr:11.11}
+ ]},
+ {c:"Vunesp · Lançamento · 01/09 (Leads)", items:[
+   {n:"🚨 HOJE COMEÇA O 1º LOTE DA REVISÃO VUNESP!", spend:121.49, reach:5134, impr:8201, ctr:1.19, clicks:98, results:0, cpr:null}
+ ]},
+ {c:"Vunesp · João · 02/09 (Leads)", items:[
+   {n:"🚨 VAI PRESTAR MEDICINA? ENTÃO PRESTA ATENÇÃO!", spend:43.39, reach:1422, impr:2104, ctr:1.24, clicks:26, results:0, cpr:null}
+ ]},
+ {c:"Vunesp · João · 02/09 (refeita em 03/09)", items:[
+   {n:"🚨 VAI PRESTAR MEDICINA? ENTÃO PRESTA ATENÇÃO!", spend:257.59, reach:8513, impr:15077, ctr:1.03, clicks:155, results:25, cpr:10.30}
+ ]},
+ {c:"Vunesp · Lançamento · 01/09 (refeita em 03/09)", items:[
+   {n:"🚨 HOJE COMEÇA O 1º LOTE DA REVISÃO VUNESP! 💛💙", spend:474.02, reach:18521, impr:40366, ctr:0.82, clicks:330, results:56, cpr:8.46}
+ ]},
+ {c:"Vunesp · 1º Lote · 04/09", items:[
+   {n:"🚨 1º LOTE DA REVISÃO VUNESP JÁ ESTÁ ABERTO!", spend:293.31, reach:9633, impr:27690, ctr:0.61, clicks:169, results:7, cpr:41.90}
+ ]},
+ {c:"P. Frio · Vunesp · 08/09", items:[
+   {n:"🧪 Dica de Química para a VUNESP com o Prof. Marcus!", spend:5.85, reach:380, impr:545, ctr:0.37, clicks:2, results:0, cpr:null},
+   {n:"✍️ A conclusão da redação na VUNESP é igual à do ENEM?", spend:5.23, reach:263, impr:335, ctr:0.90, clicks:3, results:0, cpr:null},
+   {n:"Revisão VUNESP é no All Win Cursos!!!!", spend:4.37, reach:239, impr:314, ctr:0.32, clicks:1, results:0, cpr:null},
+   {n:"✍️ Dica de Redação com a Profª Carla!", spend:3.45, reach:155, impr:187, ctr:0.00, clicks:0, results:0, cpr:null},
+   {n:"📐 GEOMETRIA PLANA NA VUNESP!", spend:2.29, reach:171, impr:219, ctr:0.91, clicks:2, results:0, cpr:null},
+   {n:"🧪 Dica de Química para a VUNESP com o Prof. Marcus Manne!", spend:1.02, reach:67, impr:78, ctr:1.28, clicks:1, results:0, cpr:null}
+ ]},
+ {c:"Vunesp · 2º Lote · 09/09", items:[
+   {n:"🚨 PERDEU O 1º LOTE DA REVISÃO VUNESP?", spend:385.97, reach:11136, impr:27964, ctr:1.18, clicks:329, results:33, cpr:11.70},
+   {n:"AD · ÚLTIMAS VAGAS REVISÃO VUNESP", spend:10.47, reach:662, impr:799, ctr:0.38, clicks:3, results:0, cpr:null}
+ ]},
+ {c:"Revisão Vunesp · 2º Lote · 11/09", items:[
+   {n:"A reta final para a sua aprovação começa agora!", spend:382.10, reach:8664, impr:17942, ctr:1.06, clicks:190, results:21, cpr:18.20},
+   {n:"AD · ÚLTIMAS VAGAS REVISÃO VUNESP", spend:13.25, reach:776, impr:921, ctr:0.76, clicks:7, results:0, cpr:null}
+ ]}
+];
+
+const old = [
+ {name:"revisão vunesp", period:"02/09–16/09/2025", goal:"Reconhecimento", spend:138.11, reach:74389, impr:95693, ctr:0.16, results:"74.389 alcançados", cpr:"R$ 1,86 / mil"},
+ {name:"SM [SET24] [TURB] [VUNESP] [MENSAGEM] [AUTO]", period:"04/09–11/09/2024", goal:"Mensagens", spend:27.63, reach:1073, impr:1588, ctr:1.57, results:"7 conversas", cpr:"R$ 3,95"},
+ {name:"SM [SET24] [TURB] [MSG] [VUNESP] [ALL PUBLICS]", period:"03/09–10/09/2024", goal:"Mensagens", spend:32.49, reach:1758, impr:2299, ctr:0.83, results:"1 conversa", cpr:"R$ 32,49"}
+];
+
+const brl = v => "R$ " + v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const num = v => v.toLocaleString("pt-BR");
+const pct = v => v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}) + "%";
+const tagHtml = t => t==="leads" ? '<span class="tag leads">Leads · 0 result.</span>'
+                 : t==="refeita" ? '<span class="tag refeita">refeita</span>'
+                 : t==="quente" ? '<span class="tag quente">público quente</span>' : "";
+
+/* ---------- tabela de campanhas ---------- */
+let sortKey=null, sortDir=1;
+function renderCamp(){
+  const rows = camp.slice();
+  if(sortKey){
+    rows.sort((a,b)=>{
+      let x=a[sortKey], y=b[sortKey];
+      if(x===null) x = sortDir===1 ? Infinity : -Infinity;
+      if(y===null) y = sortDir===1 ? Infinity : -Infinity;
+      if(typeof x==="string") return x.localeCompare(y,"pt-BR")*sortDir;
+      return (x-y)*sortDir;
+    });
+  }
+  const t=(k)=>camp.reduce((s,c)=>s+c[k],0);
+  const body = rows.map(c=>`<tr>
+    <td>${c.name}${tagHtml(c.tag)}</td>
+    <td>${c.period}</td>
+    <td>${brl(c.spend)}</td>
+    <td>${num(c.reach)}</td>
+    <td>${num(c.impr)}</td>
+    <td>${pct(c.ctr)}</td>
+    <td>${num(c.clicks)}</td>
+    <td>${c.results ? num(c.results) : '<span class="dash">0</span>'}</td>
+    <td class="${c.cpr===null?'':(c.cpr<=6?'good':(c.cpr>=18?'bad':''))}">${c.cpr===null?'<span class="dash">—</span>':brl(c.cpr)}</td>
+  </tr>`).join("");
+  const total = `<tr class="total">
+    <td>11 campanhas</td><td>25/08 – 15/09</td>
+    <td>${brl(t("spend"))}</td><td>${num(t("reach"))}</td><td>${num(t("impr"))}</td>
+    <td>0,92%</td><td>${num(t("clicks"))}</td><td>${num(t("results"))}</td><td>${brl(t("spend")/t("results"))}</td></tr>`;
+  document.querySelector("#tCamp tbody").innerHTML = body + total;
+}
+document.querySelectorAll("#tCamp th button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const k=b.dataset.k;
+    sortDir = (sortKey===k) ? -sortDir : (k==="name"||k==="period" ? 1 : -1);
+    sortKey=k;
+    document.querySelectorAll("#tCamp th").forEach(th=>th.removeAttribute("aria-sort"));
+    b.parentElement.setAttribute("aria-sort", sortDir===1?"ascending":"descending");
+    renderCamp();
+  });
+});
+renderCamp();
+
+/* ---------- conjuntos ---------- */
+document.querySelector("#tAdset tbody").innerHTML = camp.map(c=>`<tr>
+  <td>${c.adset}</td><td style="text-align:left;white-space:normal">${c.name}</td>
+  <td>${c.goal}</td><td>${c.budget}</td>
+  <td>${brl(c.spend)}</td><td>${num(c.reach)}</td><td>${pct(c.ctr)}</td>
+  <td>${c.results ? num(c.results) : '<span class="dash">0</span>'}</td>
+  <td class="${c.cpr===null?'':(c.cpr<=6?'good':(c.cpr>=18?'bad':''))}">${c.cpr===null?'<span class="dash">—</span>':brl(c.cpr)}</td>
+</tr>`).join("");
+
+/* ---------- anúncios ---------- */
+document.getElementById("ads").innerHTML = ads.map((g,i)=>{
+  const sp=g.items.reduce((s,a)=>s+a.spend,0);
+  const rs=g.items.reduce((s,a)=>s+a.results,0);
+  const rows=g.items.map(a=>`<tr>
+    <td>${a.n}</td><td>${brl(a.spend)}</td><td>${num(a.reach)}</td><td>${num(a.impr)}</td>
+    <td>${pct(a.ctr)}</td><td>${num(a.clicks)}</td>
+    <td>${a.results ? num(a.results) : '<span class="dash">0</span>'}</td>
+    <td class="${a.cpr===null?'':(a.cpr<=6?'good':(a.cpr>=18?'bad':''))}">${a.cpr===null?'<span class="dash">—</span>':brl(a.cpr)}</td>
+  </tr>`).join("");
+  return `<details class="adgroup"${i===0?" open":""}>
+    <summary><span class="ttl">${g.c}</span>
+      <span class="meta">${g.items.length} ${g.items.length>1?"anúncios":"anúncio"} · ${brl(sp)} · ${rs} ${rs===1?"conversa":"conversas"}</span></summary>
+    <div class="body"><div class="tablescroll"><table>
+      <thead><tr><th>Anúncio</th><th>Investido</th><th>Alcance</th><th>Impressões</th><th>CTR</th><th>Cliques</th><th>Result.</th><th>Custo/result.</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></div></details>`;
+}).join("");
+
+/* ---------- safras antigas ---------- */
+document.querySelector("#tOld tbody").innerHTML = old.map(o=>`<tr>
+  <td>${o.name}</td><td>${o.period}</td><td>${o.goal}</td><td>${brl(o.spend)}</td>
+  <td>${num(o.reach)}</td><td>${num(o.impr)}</td><td>${pct(o.ctr)}</td><td>${o.results}</td><td>${o.cpr}</td>
+</tr>`).join("");
+
+/* ---------- gráfico ---------- */
+const svg=document.getElementById("chart");
+const labels=["25/08","26/08","31/08","01/09★","02/09★","02/09","01/09","04/09","08/09","09/09","11/09"];
+const metrics={
+  spend:{key:"spend",label:"Investido (R$)",fmt:v=>brl(v)},
+  results:{key:"results",label:"Conversas",fmt:v=>num(v)},
+  reach:{key:"reach",label:"Alcance",fmt:v=>num(v)},
+  clicks:{key:"clicks",label:"Cliques",fmt:v=>num(v)}
+};
+let current="spend";
+
+function draw(){
+  const m=metrics[current];
+  const W=940,H=360,L=56,R=52,T=22,B=52;
+  const iw=W-L-R, ih=H-T-B;
+  const vals=camp.map(c=>c[m.key]);
+  const maxV=Math.max(...vals)*1.12 || 1;
+  const cprs=camp.map(c=>c.cpr);
+  const maxC=Math.max(...cprs.filter(v=>v!==null))*1.12;
+  const n=camp.length, step=iw/n, bw=Math.min(40,step*0.5);
+  let s="";
+
+  // grades
+  for(let i=0;i<=4;i++){
+    const y=T+ih-(ih*i/4);
+    s+=`<line x1="${L}" y1="${y}" x2="${L+iw}" y2="${y}" stroke="var(--rule)" stroke-width="1"/>`;
+    s+=`<text x="${L-9}" y="${y+4}" text-anchor="end" font-size="11" fill="var(--ink-faint)">${num(Math.round(maxV*i/4))}</text>`;
+    s+=`<text x="${L+iw+9}" y="${y+4}" font-size="11" fill="var(--amber)">${num(Math.round(maxC*i/4))}</text>`;
+  }
+
+  // barras
+  camp.forEach((c,i)=>{
+    const x=L+step*i+(step-bw)/2;
+    const h=ih*(c[m.key]/maxV);
+    const y=T+ih-h;
+    const dead = c.results===0;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${Math.max(h,1)}" rx="2"
+        fill="${dead?'var(--alert-soft)':'var(--bar)'}" stroke="${dead?'var(--alert)':'none'}" stroke-width="1">
+        <title>${c.name}\n${m.label}: ${m.fmt(c[m.key])}\nConversas: ${c.results}\nCusto/result.: ${c.cpr===null?'sem resultado':brl(c.cpr)}</title></rect>`;
+    s+=`<text x="${L+step*i+step/2}" y="${T+ih+18}" text-anchor="middle" font-size="11" fill="var(--ink-soft)">${labels[i]}</text>`;
+  });
+
+  // linha de CPA
+  let d="",pts="";
+  camp.forEach((c,i)=>{
+    if(c.cpr===null) return;
+    const x=L+step*i+step/2;
+    const y=T+ih-ih*(c.cpr/maxC);
+    d += (d?" L":"M")+x+" "+y;
+    pts+=`<circle cx="${x}" cy="${y}" r="4.5" fill="var(--amber)" stroke="var(--surface)" stroke-width="1.5">
+      <title>${c.name}\nCusto por conversa: ${brl(c.cpr)}</title></circle>`;
+    pts+=`<text x="${x}" y="${y-11}" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--amber)">${c.cpr.toFixed(2).replace(".",",")}</text>`;
+  });
+  s+=`<path d="${d}" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/>`+pts;
+
+  s+=`<text x="${L}" y="${H-12}" font-size="11" fill="var(--ink-faint)">★ campanhas otimizadas para Leads — nenhum resultado registrado</text>`;
+  svg.innerHTML=s;
+  document.getElementById("legendBar").textContent=m.label;
+}
+document.querySelectorAll("#metricSwitch button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll("#metricSwitch button").forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    current=b.dataset.metric; draw();
+  });
+});
+draw();
+</script>
+</body>
+</html>
